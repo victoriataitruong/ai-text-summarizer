@@ -15,21 +15,21 @@ const allowedOrigins = [
   'https://ai-text-summarizer-nfk5.onrender.com', // Render frontend URL
 ];
 
-// Allow any origin if the environment is production (Render)
+// CORS configuration
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests from your allowed origins
+    // Allow requests from specific origins (local or production)
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
+      callback(null, true);  // Allow the request
     } else {
-      callback(new Error('Not allowed by CORS'), false);
+      callback(new Error('Not allowed by CORS'), false);  // Deny the request
     }
   },
-  methods: ['GET', 'POST'],
-  credentials: true,
+  methods: ['GET', 'POST'],  // Allow only these methods
+  credentials: true,  // Allow credentials (cookies, authorization headers)
 }));
 
-// Enable JSON parsing
+// Enable JSON parsing for requests
 app.use(express.json());
 
 // TextRazor API setup using environment variable
@@ -76,6 +76,7 @@ app.post('/summarize', async (req, res) => {
   }
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Backend server running on http://localhost:${port}`);
 });

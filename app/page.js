@@ -14,11 +14,16 @@ const SummarizePage = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/summarize', {
+      const apiUrl = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/summarize' // Local URL for development
+        : 'https://ai-text-summarizer-nfk5.onrender.com/summarize'; // Production URL for Render
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),
       });
+
       const data = await response.json();
       setSummary(data.summary || 'Failed to summarize');
     } catch (error) {
