@@ -8,6 +8,7 @@ dotenv.config({ path: './.env' });
 
 const app = express();
 const port = process.env.PORT || 5000;
+const bodyParser = require("body-parser"); router.use(bodyParser.json());
 
 // Enable CORS with specific configuration
 const allowedOrigins = [
