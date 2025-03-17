@@ -12,11 +12,19 @@ const port = process.env.PORT || 5000;
 // Enable CORS with specific configuration
 const allowedOrigins = [
   'http://localhost:3000', // for local development
-  'https://ai-text-summarizer-nfk5.onrender.com', // the new Render hosted frontend URL
+  'https://ai-text-summarizer-nfk5.onrender.com', // Render frontend URL
 ];
 
+// Allow any origin if the environment is production (Render)
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    // Allow requests from your allowed origins
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
   methods: ['GET', 'POST'],
   credentials: true,
 }));
