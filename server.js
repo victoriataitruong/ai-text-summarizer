@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 // Enable CORS with specific configuration
 const allowedOrigins = [
   'http://localhost:3000', // for local development
-  'https://ai-text-summarizer-rk66.onrender.com', // your Render hosted frontend URL
+  'https://ai-text-summarizer-nfk5.onrender.com', // the new Render hosted frontend URL
 ];
 
 app.use(cors({
