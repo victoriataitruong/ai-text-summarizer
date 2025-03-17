@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f3f4f6; /* Light gray background */
+  color: #333;
+  transition: all 0.3s ease; /* Smooth transitions for all */
+  padding: 20px;
+}
+
+h1, h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+button, textarea {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+button:focus, textarea:focus {
+  outline: none;
+}
+
+/* Centering and layout improvements */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff; /* White background for the card */
+  border-radius: 8px; /* Rounded corners for the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Header */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2d3748; /* Darker text for header */
+}
+
+/* Input Box */
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #4CAF50; /* Green border on focus */
+}
+
+/* Summarize Button */
+button {
+  padding: 12px 24px;
+  background-color: red; /* Green background */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(72, 197, 98, 0.5); /* Focus outline */
+}
+
+/* Result Display */
+.result {
+  width: 100%;
+  background-color: #f4f7fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.result p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
