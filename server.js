@@ -2,13 +2,16 @@ import express from 'express';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';  // <-- Fixed import statement
 
 // Load environment variables from the .env file
 dotenv.config({ path: './.env' });
 
 const app = express();
 const port = process.env.PORT || 5000;
-const bodyParser = require("body-parser"); router.use(bodyParser.json());
+
+// Enable body parsing for JSON
+app.use(bodyParser.json());  // <-- Fixed body parser usage
 
 // Enable CORS with specific configuration
 const allowedOrigins = [
@@ -16,28 +19,24 @@ const allowedOrigins = [
   'https://ai-text-summarizer-nfk5.onrender.com', // Render frontend URL
 ];
 
-// CORS configuration
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests from specific origins (local or production)
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);  // Allow the request
+      callback(null, true); 
     } else {
-      callback(new Error('Not allowed by CORS'), false);  // Deny the request
+      callback(new Error('Not allowed by CORS'), false);
     }
   },
-  methods: ['GET', 'POST'],  // Allow only these methods
-  credentials: true,  // Allow credentials (cookies, authorization headers)
+  methods: ['GET', 'POST'],
+  credentials: true,
 }));
 
-// Enable JSON parsing for requests
 app.use(express.json());
 
 // TextRazor API setup using environment variable
 const TEXTRAZOR_API_URL = 'https://api.textrazor.com/';
 const TEXTRAZOR_API_KEY = process.env.TEXTRAZOR_API_KEY; 
 
-// Endpoint to summarize text
 app.post('/summarize', async (req, res) => {
   const { text } = req.body;
 
@@ -46,30 +45,28 @@ app.post('/summarize', async (req, res) => {
   }
 
   try {
-    // Prepare the request to TextRazor API
     const response = await fetch(TEXTRAZOR_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'X-TextRazor-Key': TEXTRAZOR_API_KEY, // API key in header
+        'X-TextRazor-Key': TEXTRAZOR_API_KEY,
       },
       body: new URLSearchParams({
         'text': text,
-        'extractors': 'entities,topics,sentiment', // Add extractors for summarization
+        'extractors': 'entities,topics,sentiment',
       }),
     });
 
     const data = await response.json();
 
-    // Check for error in the API response
     if (data.error) {
       return res.status(400).json({ error: data.error.message });
     }
 
-    // Create a summary based on extracted information (you can refine this logic)
-    const summary = data.response.entities ? data.response.entities.map(entity => entity.entityId).join(', ') : 'No summary available';
+    const summary = data.response.entities 
+      ? data.response.entities.map(entity => entity.entityId).join(', ')
+      : 'No summary available';
 
-    // Send the summary back to the frontend
     res.status(200).json({ summary });
   } catch (error) {
     console.error('Error occurred:', error);
